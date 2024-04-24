@@ -2,8 +2,8 @@
 #include <GL/glut.h>
 #include "gamelog.h"
 
-#define COLUMNS 40
-#define ROWS 40
+#define COLUMNS 30
+#define ROWS 30
 
 void display_callback();
 void init();
