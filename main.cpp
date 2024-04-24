@@ -4,10 +4,12 @@
 
 #define COLUMNS 30
 #define ROWS 30
+#define FPS 8
 
 void display_callback();
 void init();
 void reshape_callback(int, int);
+void timer_callback(int);
 
 int main(int argc, char** argv){
 
@@ -17,15 +19,22 @@ int main(int argc, char** argv){
     glutCreateWindow("Snake");
     glutDisplayFunc(display_callback);
     glutReshapeFunc(reshape_callback);
+    glutTimerFunc(0, timer_callback, 0);
     init();
     glutMainLoop();
     return 0;
 }
 
+int INDEX = 0;
 void display_callback(){
 
     glClear(GL_COLOR_BUFFER_BIT);
     drawGrid();
+    glRectd(INDEX, 20, (INDEX + 2), 21);
+    INDEX++;
+    if(INDEX > 30){
+        INDEX = 0;
+    }
     glutSwapBuffers();
 }
 
@@ -42,4 +51,10 @@ void reshape_callback(int w, int h){
     glLoadIdentity();
     glOrtho(0.0, COLUMNS, 0.0, ROWS, -1.0, 1.0);
     glMatrixMode(GL_MODELVIEW);
+}
+
+void timer_callback(int){
+
+    glutPostRedisplay();
+    glutTimerFunc(1000/FPS, timer_callback, 0);
 }
