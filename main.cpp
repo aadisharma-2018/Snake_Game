@@ -7,6 +7,7 @@
 #define FPS 10
 
 extern int snakeDir;
+bool gameOver = false;
 
 void display_callback();
 void init();
@@ -34,7 +35,12 @@ void display_callback(){
     glClear(GL_COLOR_BUFFER_BIT);
     drawGrid();
     drawSnake();
+    drawFood();
     glutSwapBuffers();
+    if (gameOver == true){
+        MessageBox(NULL, "Your Score : ", "GAME OVER", 0);
+        exit(0);
+    }
 }
 
 void init(){
