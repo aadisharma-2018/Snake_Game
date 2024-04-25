@@ -1,6 +1,7 @@
 #include <GL/gl.h>
 #include <GL/glut.h>
 #include "gamelog.h"
+#include <stdlib.h>
 
 #define COLUMNS 40
 #define ROWS 40
@@ -8,6 +9,7 @@
 
 extern int snakeDir;
 bool gameOver = false;
+int score = 0;
 
 void display_callback();
 void init();
@@ -38,7 +40,12 @@ void display_callback(){
     drawFood();
     glutSwapBuffers();
     if (gameOver == true){
-        MessageBox(NULL, "Your Score : ", "GAME OVER", 0);
+
+        char _score[10];
+        itoa(score, _score, 10);
+        char text[50] = "Your score: ";
+        strcat(text, _score);
+        MessageBox(NULL, text, "GAME OVER", 0);
         exit(0);
     }
 }

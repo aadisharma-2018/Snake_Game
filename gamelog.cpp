@@ -5,21 +5,22 @@
 
 int gridX;
 int gridY;
-int posX;
-int posY;
+int snake_length = 5;
+int posX[60] = {20, 20, 20, 20, 20};
+int posY[60] = {20, 19, 18, 17, 16};
 int foodX;
 int foodY;
 int snakeDir = RIGHT;
 bool food = true;
 extern bool gameOver;
-
+extern int score;
 
 void initGrid(int x, int y){
 
     gridX = x;
     gridY = y;
-    posX = (x/2);
-    posY = (y/2);
+    //posX = (x/2);
+    //posY = (y/2);
 
 }
 
@@ -67,26 +68,49 @@ void drawFood(){
 
 void drawSnake(){
 
+    for(int i = (snake_length - 1); i > 0; i--){
+
+        posX[i] = posX[i-1];
+        posY[i] = posY[i-1];
+    }
     if(snakeDir == UP){
-        posY++;
+        posY[0]++;
     }
     else if (snakeDir == DOWN){
-        posY--;
+        posY[0]--;
     }
     else if (snakeDir == LEFT){
-        posX--;
+        posX[0]--;
     }
     else if (snakeDir == RIGHT){
-        posX++;
+        posX[0]++;
     }
 
-    glColor3f(0.0, 1.0, 0.0);
-    glRectd(posX, posY, (posX + 1), (posY + 1));
+    for (int i = 0; i < snake_length; i++){
 
-    if (posX == 0 || posX == (gridX - 1) || posY == 0 || posY == (gridY - 1)){
+        if (i == 0){
+            glColor3f(0.0, 0.0, 1.0);
+        }
+        else{
+            glColor3f(0.0, 1.0, 0.0);
+        }
+        glRectd(posX[i], posY[i], (posX[i] + 1), (posY[i] + 1));
+
+    }
+    if (posX[0] == 0 || posX[0] == (gridX - 1) || posY[0] == 0 || posY[0] == (gridY - 1)){
         gameOver = true;
     }
-    if (posX == foodX && posY == foodY){
+    for (int i = 1; i < snake_length; i++){
+        if (posX[i] == posX[0] && posY[i] == posY[0]){
+            gameOver = true;
+        }
+    }
+    if (posX[0] == foodX && posY[0] == foodY){
+        score++;
+        snake_length++;
+        if (snake_length > MAX){
+            snake_length = MAX;
+        }
         food = true;
     }
 }
