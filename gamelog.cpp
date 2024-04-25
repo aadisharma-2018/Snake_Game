@@ -4,11 +4,16 @@
 
 int gridX;
 int gridY;
+int posX;
+int posY;
+int snakeDir = RIGHT;
 
 void initGrid(int x, int y){
 
     gridX = x;
     gridY = y;
+    posX = (x/2);
+    posY = (y/2);
 
 }
 
@@ -40,4 +45,21 @@ void unit(int x, int y){
         glVertex2f(x+1, y+1);
         glVertex2f(x, y+1);
     glEnd();
+}
+
+void drawSnake(){
+
+    if(snakeDir == UP){
+        posY++;
+    }
+    else if (snakeDir == DOWN){
+        posY--;
+    }
+    else if (snakeDir == LEFT){
+        posX--;
+    }
+    else if (snakeDir == RIGHT){
+        posX++;
+    }
+    glRectd(posX, posY, (posX + 1), (posY + 1));
 }
