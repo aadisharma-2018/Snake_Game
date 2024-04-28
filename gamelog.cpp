@@ -15,26 +15,28 @@ bool food = true;
 extern bool gameOver;
 extern int score;
 
-void initGrid(int x, int y){
 
-    gridX = x;
-    gridY = y;
-    //posX = (x/2);
-    //posY = (y/2);
+
+void Grid::initGrid(int x, int y){
+
+gridX = x;
+gridY = y;
 
 }
 
-void drawGrid(){
+void Grid::drawGrid(){
 
     for (int i = 0; i < gridX; i++){
         for (int j = 0; j < gridY; j++){
             unit(i, j);
         }
     }
-
 }
 
-void unit(int x, int y){
+void Grid::draw() const {
+}
+
+void Grid::unit(int x, int y){
 
 
     if (x == 0 || y == 0 || x == (gridX - 1) || y == (gridY - 1)){
@@ -54,19 +56,22 @@ void unit(int x, int y){
     glEnd();
 }
 
-void drawFood(){
+void Food::drawFood(){
 
     if (food){
         random(foodX, foodY);
     }
 
     food = false;
-    glColor3f(1.0, 0.0, 0.0);
+    glColor3f(1.0, 0.28, 0.3);
     glRectf(foodX, foodY, (foodX+1), (foodY+1));
 
 }
 
-void drawSnake(){
+void Food::draw() const {
+}
+
+void Snake::drawSnake(){
 
     for(int i = (snake_length - 1); i > 0; i--){
 
@@ -89,7 +94,7 @@ void drawSnake(){
     for (int i = 0; i < snake_length; i++){
 
         if (i == 0){
-            glColor3f(0.0, 0.0, 1.0);
+            glColor3f(0.0, 0.3, 0.0);
         }
         else{
             glColor3f(0.0, 1.0, 0.0);
@@ -115,6 +120,9 @@ void drawSnake(){
     }
 }
 
+void Snake::draw() const {
+}
+
 void random(int &x, int &y){
 
     int _maxX = (gridX-2);
@@ -125,3 +133,7 @@ void random(int &x, int &y){
     x = _min + rand() % (_maxX - _min);
     y = _min + rand() % (_maxY - _min);
 }
+
+
+
+
